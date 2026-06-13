@@ -5,127 +5,223 @@ Sistema de predicción de marcadores de fútbol basado en **Machine Learning**, 
 La aplicación utiliza información histórica de partidos internacionales para estimar:
 
 - El marcador más probable.
-- Los goles esperados para cada selección.
+- Los goles esperados de cada selección.
 - La probabilidad de victoria local, empate y victoria visitante.
 - Los diez marcadores más probables.
 
-Este proyecto fue desarrollado con fines recreativos y de entretenimiento, aprovechando la fiebre mundialista generada por la Copa Mundial de la FIFA 2026 durante los meses de junio y julio de 2026.
+Este proyecto fue desarrollado con fines recreativos y de entretenimiento, aprovechando la fiebre mundialista generada por la Copa Mundial de la FIFA 2026.
 
 ---
 
-## 🚀 Características
+# 🌐 Aplicación web
 
-- Predicción del número de goles de ambos equipos mediante modelos XGBoost.
-- Sistema Elo dinámico.
-- Variables basadas en el rendimiento reciente de las selecciones.
-- Historial de enfrentamientos directos (Head-to-Head).
-- Consideración del contexto competitivo del partido.
-- Cálculo de probabilidades utilizando la distribución de Poisson.
-- Interfaz web interactiva desarrollada con Streamlit.
+La aplicación se encuentra disponible en:
+
+## https://predictormundial2026.streamlit.app/
+
+No es necesario instalar nada. Basta con acceder desde cualquier navegador.
 
 ---
 
-## 📊 Variables utilizadas
+# 🚀 ¿Cómo utilizar la aplicación?
 
-El modelo final utiliza 17 características:
+Para generar una predicción es necesario seleccionar:
 
-### Rendimiento de los últimos 10 partidos
+- ⚽ Equipo local.
+- ⚽ Equipo visitante.
+- 📅 Fecha del partido.
+- 🏆 Nivel de competición.
+- 🌎 Si el encuentro se disputa en sede neutral.
 
-- `home_GF10`
-- `home_GA10`
-- `home_points10`
-- `home_mean_competition10`
-
-- `away_GF10`
-- `away_GA10`
-- `away_points10`
-- `away_mean_competition10`
-
-### Sistema Elo
-
-- `home_elo`
-- `away_elo`
-- `elo_diff`
-
-### Historial entre selecciones
-
-- `h2h_home_wins`
-- `h2h_away_wins`
-- `h2h_draws`
-- `h2h_matches`
-
-### Contexto del partido
-
-- `neutral`
-- `competition_level`
-
----
-
-## ⚙️ Modelo de Machine Learning
-
-Se entrenaron dos modelos independientes utilizando **XGBoost Regressor**:
-
-- Modelo para los goles del equipo local.
-- Modelo para los goles del equipo visitante.
-
-Los hiperparámetros fueron optimizados mediante **Randomized Search con validación cruzada**.
-
----
-
-## 📈 Probabilidades de los marcadores
-
-El modelo estima primero los goles esperados de cada selección.
-
-Posteriormente, mediante la distribución de Poisson, se calculan:
-
-- Probabilidades de cada marcador posible.
-- Probabilidad de victoria local.
-- Probabilidad de empate.
-- Probabilidad de victoria visitante.
-
-La aplicación presenta:
-
-- Marcador más probable.
-- Goles esperados.
-- Probabilidades del resultado.
-- Los diez marcadores con mayor probabilidad.
-
----
-
-## 📂 Estructura del proyecto
+Posteriormente, basta con presionar el botón:
 
 ```text
-.
-├── data
-│
-├── data_collection
-│   ├── featureengine.ipynb
-│   └── README.MD
-│
-├── EDA
-│   ├── Eda.ipynb
-│   └── README.MD
-│
-├── modelado
-│   ├── modelado.ipynb
-│   └── README.MD
-│
-├── modelo_final
-│   ├── GridSearch.ipynb
-│   └── README.MD
-│
-├── models
-│   ├── home_model.pkl
-│   └── away_model.pkl
-│
-├── app.py
-├── requirements.txt
-└── README.md
+Predecir marcador
+```
+
+La aplicación mostrará:
+
+- ⚽ El marcador más probable.
+- 📈 Los goles esperados de cada equipo.
+- 🏆 Probabilidad de victoria local.
+- 🤝 Probabilidad de empate.
+- 🥅 Probabilidad de victoria visitante.
+- 📊 Los diez marcadores más probables.
+- 🔍 Variables utilizadas por el modelo.
+
+---
+
+# 📈 Ejemplo de salida
+
+La aplicación proporciona información como:
+
+```text
+Marcador más probable
+
+United States 2 - 1 Paraguay
+
+Probabilidad del marcador: 9.84%
+
+Goles esperados
+
+United States: 1.93
+Paraguay: 0.98
+
+Probabilidades del resultado
+
+Victoria Estados Unidos: 56.2%
+Empate: 22.4%
+Victoria Paraguay: 21.4%
 ```
 
 ---
 
-## 📦 Requisitos
+# ⚙️ Metodología
+
+El desarrollo del proyecto se realizó en cuatro etapas principales.
+
+## 1. Feature Engineering
+
+Se construyeron variables relacionadas con:
+
+- Rendimiento reciente.
+- Sistema Elo dinámico.
+- Historial entre selecciones (Head-to-Head).
+- Contexto competitivo.
+
+📁 Documentación:
+
+```text
+data_collection/README.MD
+```
+
+---
+
+## 2. Análisis Exploratorio de Datos
+
+Se estudiaron:
+
+- Distribución de los goles.
+- Distribución de las puntuaciones Elo.
+- Correlaciones entre variables.
+- Variables con mayor relación con los goles anotados.
+
+📁 Documentación:
+
+```text
+EDA/README.MD
+```
+
+---
+
+## 3. Comparación de modelos
+
+Se evaluaron diferentes conjuntos de variables con el objetivo de identificar aquellas con mayor capacidad predictiva.
+
+📁 Documentación:
+
+```text
+modelado/README.MD
+```
+
+---
+
+## 4. Modelo final
+
+Se seleccionó un subconjunto de variables y se optimizaron los hiperparámetros mediante búsqueda aleatoria y validación cruzada.
+
+📁 Documentación:
+
+```text
+modelo_final/README.MD
+```
+
+---
+
+# 🧠 Modelo de Machine Learning
+
+Se entrenaron dos modelos independientes mediante **XGBoost Regressor**:
+
+- Modelo para goles del equipo local.
+- Modelo para goles del equipo visitante.
+
+Posteriormente, las predicciones de goles esperados son transformadas en probabilidades de marcadores utilizando una distribución de Poisson.
+
+---
+
+# 📊 Variables utilizadas
+
+El modelo final emplea 17 variables agrupadas en cuatro categorías.
+
+## Rendimiento de los últimos 10 partidos
+
+- Goles a favor.
+- Goles en contra.
+- Puntos obtenidos.
+- Nivel promedio de competición.
+
+## Sistema Elo
+
+- Elo del equipo local.
+- Elo del equipo visitante.
+- Diferencia Elo.
+
+## Historial entre selecciones
+
+- Victorias del equipo local.
+- Victorias del equipo visitante.
+- Empates.
+- Número total de enfrentamientos.
+
+## Contexto del partido
+
+- Nivel competitivo.
+- Sede neutral.
+
+---
+
+# 🔍 Principales hallazgos
+
+- La diferencia Elo constituye una de las variables más importantes del modelo.
+- El rendimiento reciente aporta una gran capacidad predictiva.
+- El historial entre equipos mejora ligeramente el desempeño.
+- Un subconjunto reducido de variables produce resultados similares al modelo completo.
+- La predicción exacta del marcador es considerablemente más difícil que la predicción del resultado del partido.
+- La fortaleza defensiva del rival resulta más influyente que la capacidad ofensiva propia.
+
+---
+
+# 🛠 Tecnologías utilizadas
+
+## Lenguaje
+
+- Python
+
+## Ciencia de datos
+
+- Pandas
+- NumPy
+
+## Machine Learning
+
+- Scikit-Learn
+- XGBoost
+
+## Modelado probabilístico
+
+- SciPy
+
+## Persistencia de modelos
+
+- Joblib
+
+## Aplicación web
+
+- Streamlit
+
+---
+
+# 📦 Requisitos
 
 ```text
 streamlit
@@ -139,148 +235,8 @@ scipy
 
 ---
 
-## Instalación
+# ⚠️ Aviso
 
-Clonar el repositorio:
+Las predicciones generadas por el sistema representan estimaciones estadísticas obtenidas a partir de información histórica y no garantizan el resultado real de los encuentros.
 
-```bash
-git clone https://github.com/usuario/predictor-mundial-2026.git
-```
-
-Ingresar al directorio:
-
-```bash
-cd predictor-mundial-2026
-```
-
-Instalar las dependencias:
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
-## ▶️ Ejecución
-
-Para iniciar la aplicación:
-
-```bash
-streamlit run app.py
-```
-
-La interfaz estará disponible en:
-
-```text
-http://localhost:8501
-```
-
----
-
-## 🖥️ Uso
-
-1. Seleccionar el equipo local.
-2. Seleccionar el equipo visitante.
-3. Elegir la fecha del partido.
-4. Seleccionar el nivel de competición.
-5. Indicar si el partido se disputa en sede neutral.
-6. Presionar **"Predecir marcador"**.
-
-La aplicación mostrará:
-
-- Marcador más probable.
-- Goles esperados para ambos equipos.
-- Probabilidades de victoria local, empate y victoria visitante.
-- Los diez marcadores con mayor probabilidad.
-- Variables utilizadas por el modelo para realizar la predicción.
-
----
-
-## 🔬 Metodología
-
-El proyecto fue desarrollado en cuatro etapas principales.
-
-### 1. Feature Engineering
-
-Se construyeron variables relacionadas con:
-
-- Rendimiento reciente.
-- Sistema Elo.
-- Historial entre selecciones.
-- Contexto competitivo.
-
-Documentación disponible en:
-
-```text
-data_collection/README.MD
-```
-
----
-
-### 2. Análisis Exploratorio de Datos
-
-Se analizaron:
-
-- Distribuciones de las variables.
-- Correlaciones.
-- Variables con mayor influencia sobre los goles.
-
-Documentación disponible en:
-
-```text
-EDA/README.MD
-```
-
----
-
-### 3. Comparación de modelos
-
-Se evaluaron diferentes conjuntos de variables para identificar aquellas con mayor capacidad predictiva.
-
-Documentación disponible en:
-
-```text
-modelado/README.MD
-```
-
----
-
-### 4. Construcción del modelo final
-
-Se seleccionó un subconjunto de variables y se optimizaron los hiperparámetros mediante búsqueda aleatoria.
-
-Documentación disponible en:
-
-```text
-modelo_final/README.MD
-```
-
----
-
-## 🔍 Principales hallazgos
-
-- La diferencia Elo constituye una de las variables más importantes del modelo.
-- El rendimiento reciente de las selecciones aporta una gran capacidad predictiva.
-- El historial entre equipos mejora ligeramente las predicciones.
-- Un conjunto reducido de variables permite obtener resultados similares al modelo completo.
-- La predicción exacta del marcador es considerablemente más compleja que la predicción del resultado del partido.
-
----
-
-## 🛠 Tecnologías utilizadas
-
-- Python
-- Pandas
-- NumPy
-- Scikit-Learn
-- XGBoost
-- Streamlit
-- Joblib
-
----
-
-## ⚠️ Aviso
-
-Este proyecto fue desarrollado con fines recreativos y de entretenimiento durante la Copa Mundial de la FIFA 2026.
-
-Las predicciones generadas por el sistema representan estimaciones estadísticas basadas en información histórica y no garantizan el resultado real de los encuentros.
+El fútbol es un deporte con una elevada incertidumbre inherente, por lo que los resultados mostrados deben interpretarse únicamente con fines recreativos y de entretenimiento.
