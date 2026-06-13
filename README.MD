@@ -235,6 +235,28 @@ scipy
 
 ---
 
+# 📂 Fuente de datos
+
+Los resultados históricos de partidos internacionales utilizados en este proyecto fueron obtenidos del conjunto de datos:
+
+> **International football results from 1872 to 2017**
+
+Disponible en Kaggle:
+
+https://www.kaggle.com/datasets/martj42/international-football-results-from-1872-to-2017
+
+Posteriormente, el conjunto de datos fue complementado con resultados más recientes hasta junio de 2026 con el objetivo de disponer de información actualizada para la Copa Mundial de la FIFA 2026.
+
+---
+
+## Referencia
+
+Mart Jürisoo. *International football results from 1872 to 2017*. Kaggle.
+
+```
+
+--- 
+
 # ⚠️ Aviso
 
 Las predicciones generadas por el sistema representan estimaciones estadísticas obtenidas a partir de información histórica y no garantizan el resultado real de los encuentros.
