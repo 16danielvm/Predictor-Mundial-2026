@@ -493,3 +493,16 @@ if st.button("Predecir marcador", type="primary"):
 
         except Exception as e:
             st.error(f"No se pudo generar la predicción: {e}")
+
+st.markdown(
+    """
+    <div style='text-align:center; color:gray; font-size:14px'>
+    ⚽ Predictor Mundial 2026 | Desarrollada por <b>Daniel Muñoz</b> 🚀
+    <br>
+    <span style='font-size:12px'>
+    Creado durante la fiebre mundialista de 2026
+    </span>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
